@@ -1,5 +1,4 @@
-import java.time.*;
-import java.time.temporal.*;
+
 import java.util.*;
 public class HighArray{
 
@@ -12,60 +11,31 @@ public class HighArray{
 		nElem = 0;
 	}
 
-		
-	public int findByLinear(long searchKey){
-		LocalTime t1 = LocalTime.now();
-		System.out.println("------------------------Linear searching started------------------ at time : "+t1);
-		int j = 0;
-		int found = 0;
-		for( ; j < nElem; j++)
-			if(a[j] == searchKey)break;
-	
-		if(j == nElem)
-			found = -1;
-		else
-		 	found = j;
-		
-		LocalTime t2 = LocalTime.now();
-		System.out.println("------------------------Linear searching ended------------------ at time : "+t2);
-		System.out.println("Consumed : " + t1.until(t2, ChronoUnit.MILLIS));
-		return found;
+	public int size(){
+		return nElem;
 	}
-	
-	
+		
+
 	
 	public int findByBinary(long searchKey){
-		LocalTime t1 = LocalTime.now();
-		System.out.println("------------------------Binary searching started------------------ at time : "+t1);
+		
 		int lowerBound = 0;
 		int upperBound = nElem -1;
 		int current = 0;
-		int found = 0;
-		while(true){
+		while(lowerBound <= upperBound){
 			current = (lowerBound + upperBound ) / 2;
-			if(lowerBound > upperBound){
-				found = -1;
-				break;
-			}
-			else if(a[current] == searchKey){
-				found = current;
-				break;			
-			}
+			if(a[current] == searchKey)
+				return current;
 			
 			else
 				if(a[current] < searchKey)
 					lowerBound = current + 1;
 				else
 					upperBound = current - 1;		
-		
 		}
 					
-		LocalTime t2 = LocalTime.now();
-		System.out.println("------------------------Binary searching ended------------------ at time : "+t2);
-		System.out.println("Consumed : " + t1.until(t2, ChronoUnit.MILLIS));
 		
-		
-		return found;
+		return -1;
 	}
 	
 	
@@ -76,16 +46,11 @@ public class HighArray{
 		nElem++;	
 	}
 	
-	
-	public void insertMany(int max){
-		Random rand = new Random();
-		for(int i = 1; i<max; i++)
-			insert((long) rand.nextInt(max) ); 
-	}
+
 	
 	
 	public boolean delete(long value){
-		
+
 		int j = 0;
 		for( ; j < nElem; j++)
 			if(a[j] == value)break;
@@ -93,18 +58,73 @@ public class HighArray{
 		if(j == nElem)
 			return false;	
 		else
-			for(int k = j; k < nElem; k++)
-				a[k] = a[k+1];
+			while(j < nElem){
+				a[j] = a[j];
+				j++;
+			
+			}
 		nElem--;
 	
 		return true;
 	}
+	
+	
+	
+	
 
 	public void display(){
 		for(int j = 0; j<nElem; j++)
 			System.out.print(a[j]+" \t");
-		System.out.println("");
-		System.out.println("------------------done-------------------");
+		
 	}
+	
+	/* ------- programming projects----------*/
+	
+	// 2.1
+	public long getMax(){
+		if(nElem == 0)
+		 	return -1; 
+		/* use this when the array is sorted, time complexity will be O(1). asc return a[nElem-1]; desc return a[0]; */  
+		
+		// unsorted array is O(N)
+		long max = a[0];
+		
+		for (int i = 1; i < nElem; i++)
+			if(max < a[i])
+				max = a[i];
+			
+		return max;
+	}
+	
+	// 2.2
+	public long removeMax(){
+		// O(N)
+		long max = getMax();
+		delete(max);
+		return max;
+	}
+	
+	
+	
+	// 2.6
+	public void noDup(){
+		long value = 0;
 
+		for(int i=0; i<nElem; i++) {
+			value = a[i];
+			for(int j=i+1; j<nElem; j++) {
+				if(a[j] == value) {
+					for(int k=j; k<nElem-1; k++) {
+						a[k] = a[k+1];
+					}
+					nElem--;
+					j--;
+				}
+			}
+		}
+	}	
+	
+
+	
+	
 }
