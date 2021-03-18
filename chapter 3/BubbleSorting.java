@@ -77,6 +77,22 @@ public class BubbleSorting{
 	}	
 	
 
+	// 3.4
+	public void oddEvenSort(){
+		boolean isSwapped = true;
+		int index = 0;
+		while(isSwapped){
+			index = index % 2 == 0 ? 1:0;
+			isSwapped = false;
+			while(index < nElem-1){
+				if(a[index] > a[index+1]){	
+					swap(index, index+1);
+					isSwapped = true;
+				}		
+				index +=2;
+			}
+		}
+	}
 
 
 

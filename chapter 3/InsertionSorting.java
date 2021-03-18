@@ -59,6 +59,47 @@ public class InsertionSorting{
         return (a[(n - 1) / 2] + a[n / 2]) / 2;
 	}			  
 
+
+
+	// 3.3
+	public void noDup(){
+		insertionSort();
+		int j = 0;
+		
+		while(j < nElem){ 
+			if(a[j] == a[j+1])break;	
+			j++;
+		}	
+		
+		j++;
+		while(j < nElem-1){
+			a[j] = a[j+1];
+			a[j+1] = 0;
+			
+			j++;
+		}	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
