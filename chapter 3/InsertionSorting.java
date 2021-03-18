@@ -30,21 +30,61 @@ public class InsertionSorting{
 
 	
 	public void insertionSort() {
-		
-		for(int i = 1; i<nElem; i++){
-			int marker = a[i];
-			int lastSpotIndex = i;
-			for(int j = i; j > 0; j--)
-				if(marker < a[j-1]){
-					a[j] = a[j-1];
-					lastSpotIndex = j-1;	
-				}
-						
-			a[lastSpotIndex] = marker;
-
-		}
+		// 3.5
+		int copy=0, comparisons=0;
 	
+		int in;
+		for(int out = 1; out < nElem; out++){
+			int temp = a[out];
+			copy++;
+			in = out;
+			while(in > 0 && a[in-1] >= temp){
+				comparisons++;
+				a[in] = a[in-1];
+				copy++;
+				--in;
+				
+			}
+			comparisons++;
+			a[in] = temp;
+			copy++;
+		}
+		
+		System.out.println(copy+" of copies and "+comparisons+" of comparisons");
 	}
+	
+	// 3.6
+	public void noDupsSort() {
+	
+		int in,nDups=0;
+		for(int out = 1; out < nElem; out++){
+			int temp = a[out];
+			in = out;
+			while(in > 0 && a[in-1] >= temp){
+				
+				if (a[in-1] == temp) {
+					temp = -1;
+					nDups++;
+				}
+
+				
+				a[in] = a[in-1];
+				--in;
+				
+			}
+			
+			a[in] = temp;
+			
+		}
+		
+		
+		nElem -= nDups;
+		
+
+	}
+	
+	
+	
 	
 	// 3.2
 	public int median() {
@@ -62,24 +102,34 @@ public class InsertionSorting{
 
 
 	// 3.3
-	public void noDup(){
+	public void noDups(){
 		insertionSort();
-		int j = 0;
+		boolean isHaveDuplicates = true;
+		while(isHaveDuplicates){
 		
-		while(j < nElem){ 
-			if(a[j] == a[j+1])break;	
-			j++;
-		}	
-		
-		j++;
-		while(j < nElem-1){
-			a[j] = a[j+1];
-			a[j+1] = 0;
+			isHaveDuplicates = false;
+			for(int i = 0; i < nElem; i++)
+				if(a[i] == a[i+1]){
+					replaceAll(i+1);
+					isHaveDuplicates = true;
+				}		
 			
-			j++;
-		}	
+		}
+				
 	}
 	
+	
+	private void replaceAll(int start){
+	
+		for(;start < nElem-1; start++){
+			a[start] = a[start+1];
+			a[start+1] = 0;	
+		}
+		
+		a[start] = 0;
+			
+		nElem--;
+	}
 	
 	
 	
